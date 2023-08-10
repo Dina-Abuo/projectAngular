@@ -1,0 +1,62 @@
+<div class="mb-3">
+  <label for="" class="form-label">Cateogry</label>
+  <select class="form-select form-select-lg" name="" id="">
+    <option selected *ngFor="let i of cateogrsOfProducts">{{i.name}}</option>
+  </select>
+</div>
+
+<input type="text" name="userName" id="" #r [value]="ClientName" (input)="ClientName=r.value">
+<input type="button" value="submit" (click)="printVlaue()">
+
+<h3 class="col mt-5" *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer"> We offer an explicit discount
+  of:{{DiscountOffers}}</h3>
+
+
+
+<div class="table-responsive mt-5" *ngIf="IsPurshased!=true">
+  <table class="table ">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Image</th>
+        <th scope="col">Quantity</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="" *ngFor="let i of allOfProducts ">
+        <td scope="row">{{i.name}}</td>
+        <td>{{i.price}}</td>
+        <td><img src="{{i.img}}" style="width: 100px;"></td>
+        <td>{{i.quantity}}</td>
+        <td> <button type="button" class="btn btn-primary" (click)="buyProduct()">Buy</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="col" [hidden]="!IsPurshased">
+  <p style="text-align: center; padding: 50px; ">Thanks for purchasing from our Store <span
+      style="color: red; font-weight: bold;">{{ClientName}} </span></p>
+</div>
+
+
+
+
+<div class="row  justify-content-center mt-5">
+  <div class="card me-3 mb-3  shadow p-3 rounded " style="width: 18rem; border: none;" *ngFor="let i of allOfProducts ">
+    <div style="height: 70%; display: flex; align-items: center; ">
+      <img [src]="i.img" class="card-img-top" alt="...">
+    </div>
+
+    <div class="card-body ">
+      <h5 class="card-title" style=" color: red;">{{i.name}}</h5>
+      <p class="card-text">لا توجد تقيمات</p>
+      <p class="card-text"> <samp style="color: red;"> {{i.price}} </samp> جنية</p>
+      <button class="btn" style="background-color: gray; color: white;">أضف الي الشنطة <i
+          class="fa-solid fa-briefcase me-3"></i> </button>
+    </div>
+  </div>
+
+</div>
