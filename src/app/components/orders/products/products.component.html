@@ -1,55 +1,105 @@
 <div class="mb-3">
   <label for="" class="form-label">Cateogry</label>
-  <select class="form-select form-select-lg" name="" id="">
-    <option selected *ngFor="let i of cateogrsOfProducts">{{i.name}}</option>
+  <!-- <select  #cateogry class="form-select form-select-lg" (change)="getSelcated(cateogry.value)" > -->
+  <!--   Event Binding  (in ts event.target.value)-->
+  <!-- <select  class="form-select form-select-lg" (change)="getSelcated($value)" >    -->
+  <!-- tow way buinding  -->
+  <select class="form-select form-select-lg" [(ngModel)]="slectedCateogryId">
+    <option *ngFor="let i of cateogrsOfProducts" [value]="i.id">{{i.name}}</option>
   </select>
 </div>
-
+<p> for test {{ slectedCateogryId}} <button type="button" class="btn btn-primary ms-5" (click)=" changeCat()"> change
+  </button></p>
 <input type="text" name="userName" id="" #r [value]="ClientName" (input)="ClientName=r.value">
 <input type="button" value="submit" (click)="printVlaue()">
 
-<h3 class="col mt-5" *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer"> We offer an explicit discount
+
+<!--  alias name في حالة ال   -->
+<h3 LightBox="red" defaultColor="gray" class="col mt-5 p-3 " style="background-color: aqua; "
+  *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer"> We offer an explicit discount
   of:{{DiscountOffers}}</h3>
+<!-- <h3 LightBox highLightColor="red" class="col mt-5 p-3 " style="background-color: aqua; "
+  *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer"> We offer an explicit discount
+  of:{{DiscountOffers}}</h3> -->
 
 
+<!--********************************** table ********************************-->
 
 <div class="table-responsive mt-5" *ngIf="IsPurshased!=true">
-  <table class="table ">
+  <table class="table  ">
     <thead>
-      <tr>
+      <tr class="table-dark">
+        <th scope="col">No.</th>
         <th scope="col">Name</th>
-        <th scope="col">Price</th>
         <th scope="col">Image</th>
+        <th scope="col">Price in USD</th>
+        <th scope="col">Price in $</th>
         <th scope="col">Quantity</th>
-        <th scope="col"></th>
+        <th scope="col">Count</th>
+        <th scope="col">Buy</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="" *ngFor="let i of allOfProducts ">
-        <td scope="row">{{i.name}}</td>
-        <td>{{i.price}}</td>
+      <!--
+          ngcontent vs ng container vs ng template
+        https://www.freecodecamp.org/news/everything-you-need-to-know-about-ng-template-ng-content-ng-container-and-ngtemplateoutlet-4b7b51223691/ -->
+      <!-- hidden binding  -->
+      <!-- <tr *ngFor="let i of allOfProducts ;let x=index; trackB:ProdtrackByFun"
+        [class.d-none]="slectedCateogryId!=i.cateogryId"> -->
+      <!-- ng-contaier -->
+      <!-- <ng-container *ngFor="let i of allOfProducts ;let x=index;">
+        <tr *ngIf="i.quantity!=0"> -->
+      <tr *ngFor="let i of allOfProducts ;let x=index;"
+        [ngClass]="{'bg-warning':i.quantity==0,'text-primary':i.quantity==0}">
+
+        <td>{{x+1}}</td>
+        <!-- safe naviagation operator -->
+        <td>{{i?.name}}</td>
         <td><img src="{{i.img}}" style="width: 100px;"></td>
-        <td>{{i.quantity}}</td>
-        <td> <button type="button" class="btn btn-primary" (click)="buyProduct()">Buy</button></td>
+        <td>{{i.price | currency:'USD' : 'symbol'}}</td>
+        <td>{{i.price | USDtoEGP:20 |currency:'EGP' : 'code'}}</td>
+        <td>
+          <!-- ng template -->
+          <!-- <div *ngIf="i.quantity!=0 ; else outofStock">{{i.quantity}}</div>
+          <ng-template #outofStock> Out of Stock</ng-template> -->
+
+          <!-- ng switch -->
+          <div [ngSwitch]="i.quantity">
+            <div *ngSwitchCase="0">Out of Stock</div>
+            <div *ngSwitchCase="1">last item!</div>
+            <div *ngSwitchCase="2">last 2 item</div>
+            <div *ngSwitchDefault>{{i.quantity}}</div>
+          </div>
+
+        </td>
+        <td>
+          <!-- template varibles -->
+          <input #countValue name="" id="" class="from-control me-5" type="number">
+        </td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="buyProduct(i.price,countValue.value)">Buy</button>
+        </td>
       </tr>
+      <!-- </ng-container> -->
     </tbody>
   </table>
 </div>
 
-<div class="col" [hidden]="!IsPurshased">
+<h3> Order Total Price : {{allTotalPrice | currency}} </h3>
+
+<!-- <div class="col" [hidden]="!IsPurshased">
   <p style="text-align: center; padding: 50px; ">Thanks for purchasing from our Store <span
       style="color: red; font-weight: bold;">{{ClientName}} </span></p>
-</div>
+</div> -->
 
 
-
+<!-- ***********************card********************************************************  -->
 
 <div class="row  justify-content-center mt-5">
   <div class="card me-3 mb-3  shadow p-3 rounded " style="width: 18rem; border: none;" *ngFor="let i of allOfProducts ">
     <div style="height: 70%; display: flex; align-items: center; ">
       <img [src]="i.img" class="card-img-top" alt="...">
     </div>
-
     <div class="card-body ">
       <h5 class="card-title" style=" color: red;">{{i.name}}</h5>
       <p class="card-text">لا توجد تقيمات</p>
