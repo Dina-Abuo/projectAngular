@@ -11,6 +11,9 @@ import { ProductsComponent } from './components/orders/products/products.compone
 import { FormsModule } from '@angular/forms';
 import { LightBoxDirective } from './Directives/light-box.directive';
 import { USDtoEGPPipe } from './Pipes/usdto-egp.pipe';
+import { NationalIDToDatePipe } from './Pipes/national-idto-date.pipe';
+import { CreditCardPipe } from './Pipes/credit-card.pipe';
+import { ShadowDirective } from './Directives/shadow.directive';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { USDtoEGPPipe } from './Pipes/usdto-egp.pipe';
     ProductsComponent,
     LightBoxDirective,
     USDtoEGPPipe,
+    NationalIDToDatePipe,
+    CreditCardPipe,
+    ShadowDirective,
 
   ],
   imports: [

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { DiscountOffers } from 'src/app/Modules/discount-offers';
 import { ICategory } from 'src/app/Modules/icategory';
 import { Iproduct } from 'src/app/Modules/iproduct';
+import { IUsers } from 'src/app/Modules/iusers';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -13,16 +14,24 @@ export class ProductsComponent {
   public DiscountOffers = DiscountOffers.SecondOffer;
 
   public slectedCateogryId: Number = 0;
-  public ClientName: string = ''
+  public ClientName: string = '';
+  public ClientNationalId: string = '';
+  public ClientCreditCard: string = '';
+  public Users: IUsers[];
   public allOfProducts: Iproduct[];
   public cateogrsOfProducts: ICategory[];
   public IsPurshased: boolean = false;
   public allTotalPrice: number = 0;
   public expression: string = 'green'
+  public date = new Date();
 
   constructor() {
 
-
+    this.Users = [
+      { id: 1, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` },
+      { id: 2, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` },
+      { id: 3, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` }
+    ]
     this.cateogrsOfProducts = [
       { id: 1, name: 'Laptop' },
       { id: 2, name: 'Phone' },
@@ -40,26 +49,20 @@ export class ProductsComponent {
 
   };
 
-  printVlaue() {
-    console.log(this.ClientName)
-  }
-
+ 
   // buyProduct() {
   //   this.IsPurshased = !this.IsPurshased
   // }
 
-  buyProduct(prodPrice: number, count: string) {
-
+  buyProduct(prodPrice: number, count: string, prodQuantity: number) {
     // طرق تحويل السترنج لرقم
     // this.allTotalPrice = parseInt(count) + 10
     // this.allTotalPrice = Number(count) + 10;
     this.allTotalPrice += +count * prodPrice;
 
+    prodQuantity += 1;
   }
 
-  changeCat() {
-    this.slectedCateogryId = 1;
-  }
 
 
   ProdtrackByFun(index: number, prd: Iproduct): number {
