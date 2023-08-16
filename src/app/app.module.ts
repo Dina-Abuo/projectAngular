@@ -14,6 +14,7 @@ import { USDtoEGPPipe } from './Pipes/usdto-egp.pipe';
 import { NationalIDToDatePipe } from './Pipes/national-idto-date.pipe';
 import { CreditCardPipe } from './Pipes/credit-card.pipe';
 import { ShadowDirective } from './Directives/shadow.directive';
+import { OrderMasterComponent } from './components/orders/order-master/order-master.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ShadowDirective } from './Directives/shadow.directive';
     NationalIDToDatePipe,
     CreditCardPipe,
     ShadowDirective,
+    OrderMasterComponent,
 
   ],
   imports: [

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { DiscountOffers } from 'src/app/Modules/discount-offers';
 import { ICategory } from 'src/app/Modules/icategory';
 import { Iproduct } from 'src/app/Modules/iproduct';
@@ -8,36 +8,37 @@ import { IUsers } from 'src/app/Modules/iusers';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnChanges {
 
   public discountOffersEnum = DiscountOffers;
   public DiscountOffers = DiscountOffers.SecondOffer;
 
-  public slectedCateogryId: Number = 0;
+
   public ClientName: string = '';
   public ClientNationalId: string = '';
   public ClientCreditCard: string = '';
   public Users: IUsers[];
   public allOfProducts: Iproduct[];
-  public cateogrsOfProducts: ICategory[];
+  public prodListOfCat: Iproduct[] = [];
   public IsPurshased: boolean = false;
   public allTotalPrice: number = 0;
+  @Output() TotalPriceChange: EventEmitter<number>;
   public expression: string = 'green'
   public date = new Date();
 
+  @Input() sentCateogryId: number = 0;
+
+
   constructor() {
+
+    this.TotalPriceChange = new EventEmitter<number>;
 
     this.Users = [
       { id: 1, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` },
       { id: 2, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` },
       { id: 3, userName: `${this.ClientName}`, nationalId: `${this.ClientNationalId}`, creditCard: `${this.ClientCreditCard}` }
     ]
-    this.cateogrsOfProducts = [
-      { id: 1, name: 'Laptop' },
-      { id: 2, name: 'Phone' },
-      { id: 3, name: 'Tablet' }
 
-    ]
     this.allOfProducts = [
       { id: 10, name: 'Laptop', quantity: 0, price: 10000000000, img: 'https://th.bing.com/th/id/OIP.X8KU3mfmKx2t8wS2lDxYbAHaHa?pid=ImgDet&rs=1', cateogryId: 1 },
       { id: 40, name: "Laptop", quantity: 1, price: 3007780, img: 'https://th.bing.com/th/id/OIP.pRGXh8ZLK9l3EwvaUu5DdwAAAA?pid=ImgDet&w=474&h=474&rs=1', cateogryId: 1 },
@@ -47,9 +48,14 @@ export class ProductsComponent {
       { id: 40, name: "Tablet", quantity: 30, price: 765435, img: 'https://th.bing.com/th/id/R.aa892f524086b53118f0f5dce0572b90?rik=gzBJwRR%2byHQxvA&riu=http%3a%2f%2fimages.fonearena.com%2fblog%2fwp-content%2fuploads%2f2015%2f11%2fXiaomi-Mi-Pad-21.jpg&ehk=J6T0f3g3JlzhZ1DUIfcVG7KxNh0QOIE%2fblWMy8XelVY%3d&risl=&pid=ImgRaw&r=0', cateogryId: 3 },
     ];
 
-  };
+  }
 
- 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.FiterProductsByCateogryId()
+  }
+  ;
+
+
   // buyProduct() {
   //   this.IsPurshased = !this.IsPurshased
   // }
@@ -61,8 +67,17 @@ export class ProductsComponent {
     this.allTotalPrice += +count * prodPrice;
 
     prodQuantity += 1;
+    // Execute Event
+    this.TotalPriceChange.emit(this.allTotalPrice)
+
   }
 
+  private FiterProductsByCateogryId() {
+    if (this.sentCateogryId == 0) { this.prodListOfCat = this.allOfProducts }
+    else {
+      this.prodListOfCat = this.allOfProducts.filter(product => product.cateogryId == this.sentCateogryId)
+    }
+  }
 
 
   ProdtrackByFun(index: number, prd: Iproduct): number {

@@ -1,9 +1,9 @@
-import { Directive, ElementRef, HostListener, Input } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Directive({
   selector: '[LightBox]'
 })
-export class LightBoxDirective {
+export class LightBoxDirective implements OnChanges {
   // @Input() highLightColor: string = "yellow";
   // alias name
   @Input('LightBox') highLightColor: string = "yellow";
@@ -12,15 +12,17 @@ export class LightBoxDirective {
 
 
   constructor(private elemtRef: ElementRef) {
-    this.elemtRef.nativeElement.style.border = `2px soild ${this.defaultColor}`
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.elemtRef.nativeElement.style.borderColor = `${this.defaultColor}`
   }
 
   @HostListener('mouseover') onMouseOver() {
-    this.elemtRef.nativeElement.style.border = `2px soild ${this.highLightColor}`
+    this.elemtRef.nativeElement.style.borderColor = `${this.highLightColor}`
   }
 
   @HostListener('mouseout') onMouseOut() {
-    this.elemtRef.nativeElement.style.border = `2px soild ${this.defaultColor}`
+    this.elemtRef.nativeElement.style.borderColor = `${this.defaultColor}`
   }
 
 
