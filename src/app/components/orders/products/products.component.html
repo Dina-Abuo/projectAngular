@@ -1,4 +1,4 @@
-<div class="table-responsive mt-5" *ngIf="IsPurshased!=true">
+<div class="table-responsive mt-5">
   <table class=" ">
     <thead>
       <tr class="">
@@ -9,18 +9,12 @@
         <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Price in $</th>
         <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Quantity</th>
         <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Count</th>
-        <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Buy</th>
+        <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Detalis</th>
+        <th scope="col p-5" style="background-color: aquamarine; padding: 20px; text-align:center; ">Add</th>
       </tr>
     </thead>
+
     <tbody>
-      <!--
-          ngcontent vs ng container vs ng template
-        https://www.freecodecamp.org/news/everything-you-need-to-know-about-ng-template-ng-content-ng-container-and-ngtemplateoutlet-4b7b51223691/ -->
-      <!-- <tr *ngFor="let i of allOfProducts ;let x=index; trackB:ProdtrackByFun"
-        [class.d-none]="slectedCateogryId!=i.cateogryId"> -->
-      <!-- ng-contaier -->
-      <!-- <ng-container *ngFor="let i of allOfProducts ;let x=index;">
-        <tr *ngIf="i.quantity!=0"  [ngClass]="{'bg-warning':i.quantity==0}"> -->
       <tr *ngFor="let i of prodListOfCat ;let x=index;"
         [ngStyle]="{'background-color':i.quantity===0 ? 'yellow':'white'}">
         <td style=" padding: 20px; text-align:center; ">{{x+1}}</td>
@@ -35,9 +29,6 @@
         <td style=" padding: 20px; text-align:center; ">{{i.price | USDtoEGP:20
           |currency:'EGP' : 'code'}}</td>
         <td style=" padding: 20px; text-align:center;">
-          <!-- ng template -->
-          <!-- <div *ngIf="i.quantity!=0 ; else outofStock">{{i.quantity}}</div>
-          <ng-template #outofStock> Out of Stock</ng-template> -->
           <!-- ng switch -->
           <div [ngSwitch]="i.quantity">
             <div *ngSwitchCase="0">Out of Stock</div>
@@ -50,103 +41,21 @@
           <!-- template varibles -->
           <input #countValue name="" id="" class="from-control me-5" type="number">
         </td>
+        <!-- <td style="padding: 20px; text-align:center; ">
+          <button type="button" class="btn btn-primary" (click)="openProductDetalis(i.id)">Details</button>
+        </td> -->
+        <td style="padding: 20px; text-align:center; ">
+          <a class="btn btn-primary" role="button" [routerLink]="['/product',i.id]">Details</a>
+        </td>
         <td style="padding: 20px; text-align:center; ">
           <button type="button" class="btn btn-primary"
             (click)="buyProduct(i.price,countValue.value ,i.quantity)">Buy</button>
         </td>
       </tr>
-      <!-- </ng-container> -->
     </tbody>
+
   </table>
 </div>
 
-<!-- 
-<h3 class="mt-5">
-  [to be removed for test ]<br>
-  Order Total Price : {{allTotalPrice | currency}} </h3> -->
-
-<!-- <div class="col" [hidden]="!IsPurshased">
-  <p style="text-align: center; padding: 50px; ">Thanks for purchasing from our Store <span
-      style="color: red; font-weight: bold;">{{ClientName}} </span></p>
-</div> -->
 
 
-<div class="d-flex justify-content-center mt-5">
-  <div class="col-8 shadow p-3">
-    <form action="" method="post">
-      <div class="mb-3">
-        <label for="userNmae" class="form-label">User Name</label>
-        <input type="text" id="userNmae" class="form-control" name="userName" aria-describedby="helpId" #r
-          [value]="ClientName" (input)="ClientName=r.value" placeholder="Enter User Name">
-      </div>
-      <div class="mb-3">
-        <label for="nationalId" class="form-label">National Id</label>
-        <input type="text" class="form-control" name="nationId" id="nationId" aria-describedby="helpId"
-          placeholder=" Enter  National Id" [(ngModel)]="ClientNationalId">
-      </div>
-      <div class="mb-3">
-        <label for="creditCard " class="form-label">Credit Card</label>
-        <input type="text" class="form-control" name="creditCard" id="creditCard" aria-describedby="helpId"
-          placeholder=" Enter Credit Card" [(ngModel)]="ClientCreditCard">
-      </div>
-      <input type="button" value="submit" class="btn btn-primary">
-    </form>
-  </div>
-</div>
-
-<div class="table-responsive mt-5">
-  <table class="table">
-    <thead>
-      <tr class=" table-dark">
-        <th scope="col">User Name</th>
-        <th scope="col">National Id</th>
-        <th scope="col">Credit Card</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let i of Users ">
-        <td scope="row">{{i?.userName}}</td>
-        <td>{{i?.nationalId }}</td>
-        <td>{{i?.creditCard }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<div>
-  <h2>befor pipe: <span style="color: blueviolet;"> {{ClientNationalId}} </span> after pipe <span
-      style="color: blueviolet;">{{ClientNationalId |nationalIDToDate}} </span></h2>
-
-  <h2>befor pipe : <span style="color: blueviolet;"> {{ClientCreditCard}}</span> after pipe : <span
-      style="color: blueviolet;">{{ClientCreditCard |creditCard}} </span></h2>
-
-</div>
-
-<!--  alias name في حالة ال   -->
-<h3 class="col mt-5 p-3 " *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer">
-  We offer an explicit discount
-  of:{{DiscountOffers}}</h3>
-<!-- <h3 LightBox highLightColor="red" class="col mt-5 p-3 " style="background-color: aqua; "
-  *ngIf=" DiscountOffers !== discountOffersEnum.notFoundOffer"> We offer an explicit discount
-  of:{{DiscountOffers}}</h3> -->
-
-
-<!-- ***********************card********************************************************  -->
-
-<div class="row  justify-content-center mt-5">
-  <div Shadow='3' class="card me-3 mb-3  p-3 rounded " style="width: 18rem; border: none;"
-    *ngFor="let i of allOfProducts ">
-    <div style="height: 70%; display: flex; align-items: center; ">
-      <img [src]="i.img" class="card-img-top" alt="...">
-    </div>
-    <div class="card-body ">
-      <h5 class="card-title" style=" color: red;">{{i.name}}</h5>
-      <p class="card-text">لا توجد تقيمات</p>
-      <p> {{date | date}}</p>
-      <p class="card-text"> <samp style="color: red;"> {{i.price}} </samp> جنية</p>
-      <button class="btn" style="background-color: gray; color: white;">أضف الي الشنطة <i
-          class="fa-solid fa-briefcase me-3"></i> </button>
-    </div>
-  </div>
-
-</div>

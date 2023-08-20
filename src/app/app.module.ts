@@ -15,6 +15,10 @@ import { NationalIDToDatePipe } from './Pipes/national-idto-date.pipe';
 import { CreditCardPipe } from './Pipes/credit-card.pipe';
 import { ShadowDirective } from './Directives/shadow.directive';
 import { OrderMasterComponent } from './components/orders/order-master/order-master.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { LoginComponent } from './components/login/login.component';
+import { MainLayoutComponent } from './components/main-layout/main-layout.component';
+import { ProductDetalisComponent } from './components/orders/product-detalis/product-detalis.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { OrderMasterComponent } from './components/orders/order-master/order-mas
     CreditCardPipe,
     ShadowDirective,
     OrderMasterComponent,
+    NotFoundComponent,
+    LoginComponent,
+    MainLayoutComponent,
+    ProductDetalisComponent,
 
   ],
   imports: [

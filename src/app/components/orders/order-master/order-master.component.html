@@ -13,11 +13,5 @@
 <app-products [sentCateogryId]="slectedCateogryId" (TotalPriceChange)="onTotalPriceChanged($event)"></app-products>
 <hr>
 
-<div class="mb-3">
-  <label for="userName" class="form-label">User Name</label>
-  <input type="text" #userName class="form-control" name="userName" id="userName" aria-describedby="helpId"
-    placeholder="enter user name">
-</div>
-<hr>
 <h3>Order Total Price : {{receivedOrderTotalPrice }}</h3>
 <button class="btn btn-success" (click)="completeOrder()"> place order </button>

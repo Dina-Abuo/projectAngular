@@ -18,8 +18,9 @@ export class OrderMasterComponent implements OnInit, AfterViewInit {
   //clientNameInput: ElementRef = {} as ElementRef();
   //clientNameInput: ElementRef |null =null;
   //clientNameInput: ElementRef | undefined = undefined;
-  //clientNameInput?: ElementRef ; // optional
-  @ViewChild('userName') clientNameInput!: ElementRef;
+  //clientNameInput ?: ElementRef ; // optional
+  // clientNameInput !: ElementRef; // non null asseration operation
+
   @ViewChild(ProductsComponent) prdlistCompObj!: ProductsComponent;
   constructor() {
     this.cateogrsOfProducts = [
@@ -34,9 +35,7 @@ export class OrderMasterComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.clientNameInput.nativeElement.value = "youer name "
-    this.clientNameInput.nativeElement.style.border = " 2px solid red"
-    console.log(this.prdlistCompObj.allOfProducts)
+    // console.log(this.prdlistCompObj.allOfProducts)
   }
 
   onTotalPriceChanged(totalPrcice: number) {
@@ -44,8 +43,7 @@ export class OrderMasterComponent implements OnInit, AfterViewInit {
   }
 
   completeOrder() {
-    
-    this.prdlistCompObj.allOfProducts[0].quantity -= 1;
+    // this.prdlistCompObj.allOfProducts[0].quantity -= 1;
   }
 
 }
