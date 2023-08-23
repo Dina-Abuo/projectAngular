@@ -1,1 +1,3 @@
-<p>login works!</p>
+<button [disabled]="isUserLogged" type="button" class="btn btn-success m-3" (click)="login()">Loging</button>
+
+   <button [disabled]="!isUserLogged" type="button" class="btn btn-danger m-3" (click)="logout()">Logout</button>
