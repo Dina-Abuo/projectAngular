@@ -50,6 +50,7 @@
         <td style="padding: 20px; text-align:center; ">
           <button type="button" class="btn btn-primary"
             (click)="buyProduct(i.price,countValue.value ,i.quantity)">Buy</button>
+                      <button type="button" class="btn btn-primary m-3" [routerLink]="['/products/add']" > Add </button>
         </td>
       </tr>
     </tbody>

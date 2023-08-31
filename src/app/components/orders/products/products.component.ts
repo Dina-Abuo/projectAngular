@@ -4,6 +4,7 @@ import { DiscountOffers } from 'src/app/Modules/discount-offers';
 import { ICategory } from 'src/app/Modules/icategory';
 import { Iproduct } from 'src/app/Modules/iproduct';
 import { IUsers } from 'src/app/Modules/iusers';
+import { ProductsService } from 'src/app/Services/products.service';
 import { StaticProductsService } from 'src/app/Services/static-products.service';
 @Component({
   selector: 'app-products',
@@ -24,17 +25,29 @@ export class ProductsComponent implements OnInit, OnChanges {
   @Output() TotalPriceChange: EventEmitter<number>;
   @Input() sentCateogryId: number = 0;
 
-  constructor(private staticProcductService: StaticProductsService, private router: Router) {
+  constructor(
+    // private staticProcductService: StaticProductsService,
+    private ProcductService: ProductsService,
+    private router: Router) {
 
     this.TotalPriceChange = new EventEmitter<number>;
 
   }
   ngOnInit(): void {
-    this.prodListOfCat = this.staticProcductService.getAllProducts()
+    // this.prodListOfCat = this.staticProcductService.getAllProducts()
+
+    this.ProcductService.getAllProducts().subscribe({
+      next: (p) => { this.prodListOfCat = p },
+      error: (e) => { console.log(e) }
+
+    })
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.prodListOfCat = this.staticProcductService.getProductsByCateogryId(this.sentCateogryId)
+    // this.prodListOfCat = this.staticProcductService.getProductsByCateogryId(this.sentCateogryId)
+    this.ProcductService.getProductCatID(this.sentCateogryId).subscribe((product) => {
+      this.prodListOfCat = product;
+    })
   }
   ;
 
