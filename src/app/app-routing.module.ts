@@ -9,6 +9,7 @@ import { MainLayoutComponent } from './components/main-layout/main-layout.compon
 import { ProductDetalisComponent } from './components/orders/product-detalis/product-detalis.component';
 import { AuthGuard } from './Gaurds/auth.guard';
 import { AddProductComponent } from './components/add-product/add-product.component';
+import { UerRegisterComponent } from './components/user-register/uer-register.component';
 
 const routes: Routes = [// first-match wins strategy
   {
@@ -22,6 +23,7 @@ const routes: Routes = [// first-match wins strategy
     ]
   },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: UerRegisterComponent },
   { path: 'logout', component: LoginComponent },
   { path: '**', component: NotFoundComponent }//wild card path
 ];
