@@ -6,6 +6,7 @@ import { Iproduct } from 'src/app/Modules/iproduct';
 import { IUsers } from 'src/app/Modules/iusers';
 import { ProductsService } from 'src/app/Services/products.service';
 import { StaticProductsService } from 'src/app/Services/static-products.service';
+import { ShoppingCartItems } from 'src/app/ViewModuls/shopping-cart-items';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -19,10 +20,10 @@ export class ProductsComponent implements OnInit, OnChanges {
 
 
   public prodListOfCat: Iproduct[] = [];
-
   public allTotalPrice: number = 0;
 
-  @Output() TotalPriceChange: EventEmitter<number>;
+  // @Output() TotalPriceChange: EventEmitter<number>;
+  @Output() ItemBought: EventEmitter<ShoppingCartItems>
   @Input() sentCateogryId: number = 0;
 
   constructor(
@@ -30,14 +31,18 @@ export class ProductsComponent implements OnInit, OnChanges {
     private ProcductService: ProductsService,
     private router: Router) {
 
-    this.TotalPriceChange = new EventEmitter<number>;
+    this.ItemBought = new EventEmitter<ShoppingCartItems>
+    // this.TotalPriceChange = new EventEmitter<number>;
 
   }
   ngOnInit(): void {
     // this.prodListOfCat = this.staticProcductService.getAllProducts()
 
     this.ProcductService.getAllProducts().subscribe({
-      next: (p) => { this.prodListOfCat = p },
+      next: (p) => {
+        // if (this.sentCateogryId == 0)
+        this.prodListOfCat = p
+      },
       error: (e) => { console.log(e) }
 
     })
@@ -45,8 +50,19 @@ export class ProductsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     // this.prodListOfCat = this.staticProcductService.getProductsByCateogryId(this.sentCateogryId)
-    this.ProcductService.getProductCatID(this.sentCateogryId).subscribe((product) => {
-      this.prodListOfCat = product;
+    this.ProcductService.getProductCatID(this.sentCateogryId).subscribe((productList) => {
+      if (this.sentCateogryId == 0) {
+        this.ProcductService.getAllProducts().subscribe({
+          next: (p) => {
+            // if (this.sentCateogryId == 0)
+            this.prodListOfCat = p
+          },
+          error: (e) => { console.log(e) }
+
+        })
+      }
+      else
+        this.prodListOfCat = productList;
     })
   }
   ;
@@ -60,8 +76,11 @@ export class ProductsComponent implements OnInit, OnChanges {
     this.allTotalPrice += +count * prodPrice;
 
     prodQuantity += 1;
+
+
     // Execute Event
-    this.TotalPriceChange.emit(this.allTotalPrice)
+    // this.TotalPriceChange.emit(this.allTotalPrice)
+    this.ItemBought.emit()
 
   }
 

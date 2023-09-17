@@ -1,17 +1,21 @@
 <div class="mb-3">
   <label for="" class="form-label">Cateogry</label>
-  <!-- <select  #cateogry class="form-select form-select-lg" (change)="getSelcated(cateogry.value)" > -->
-  <!--   Event Binding  (in ts event.target.value)-->
-  <!-- <select  class="form-select form-select-lg" (change)="getSelcated($value)" >    -->
-  <!-- tow way buinding  -->
   <select class="form-select form-select-lg" [(ngModel)]="slectedCateogryId">
     <option value="0" selected> All</option>
     <option *ngFor="let i of cateogrsOfProducts" [value]="i.id">{{i.name}}</option>
   </select>
 </div>
-<hr>
-<app-products [sentCateogryId]="slectedCateogryId" (TotalPriceChange)="onTotalPriceChanged($event)"></app-products>
-<hr>
 
+<app-products [sentCateogryId]="slectedCateogryId" ></app-products>
+
+
+<!-- <app-products [sentCateogryId]="slectedCateogryId" (TotalPriceChange)="onTotalPriceChanged($event)"></app-products> -->
+
+
+
+
+
+
+<!-- <hr>
 <h3>Order Total Price : {{receivedOrderTotalPrice }}</h3>
-<button class="btn btn-success" (click)="completeOrder()"> place order </button>
+<button class="btn btn-success" (click)="completeOrder()"> place order </button> -->

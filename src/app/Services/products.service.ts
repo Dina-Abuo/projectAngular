@@ -41,7 +41,7 @@ export class ProductsService {
     //     return APIResponseVM.data
     //   })
     // )
-    return this.httpClient.get<Iproduct[]>(`${environment.APIURL}/porduct`)
+    return this.httpClient.get<Iproduct[]>(`${environment.APIURL}/product`)
   }
 
   getProductCatID(catID: number): Observable<Iproduct[]> {
